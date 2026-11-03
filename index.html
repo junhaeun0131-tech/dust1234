@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!-- 공기 신호등 대기오염 정보 웹앱 -->
+<html lang="ko">
+<head>
+  <!-- 문자 인코딩 및 반응형 뷰포트 설정 -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>공기 신호등 — 실시간 대기오염</title>
+
+  <!-- Pretendard 웹폰트 (CDN) -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+  />
+
+  <!-- 외부 CSS 파일 연결 -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── 상단 헤더 ─────────────────────────────── -->
+  <header class="site-header">
+    <h1 class="site-title">공기 신호등</h1>
+    <p class="site-subtitle">한국환경공단 에어코리아 실시간 대기오염 정보</p>
+  </header>
+
+  <main class="main-content">
+
+    <!-- ── 지역 선택 드롭다운 ─────────────────────── -->
+    <section class="select-section">
+      <label for="sido-select" class="select-label">지역</label>
+      <select id="sido-select" class="sido-select">
+        <option value="전국">전국</option>
+        <option value="서울">서울</option>
+        <option value="부산">부산</option>
+        <option value="대구">대구</option>
+        <option value="인천">인천</option>
+        <option value="광주">광주</option>
+        <option value="대전">대전</option>
+        <option value="울산">울산</option>
+        <option value="세종">세종</option>
+        <option value="경기">경기</option>
+        <option value="강원">강원</option>
+        <option value="충북">충북</option>
+        <option value="충남">충남</option>
+        <option value="전북">전북</option>
+        <option value="전남">전남</option>
+        <option value="경북">경북</option>
+        <option value="경남">경남</option>
+        <option value="제주">제주</option>
+      </select>
+    </section>
+
+    <!-- ── 로딩 표시 ──────────────────────────────── -->
+    <div class="loading-wrap" id="loading-wrap">
+      <div class="spinner"></div>
+      <p class="loading-text">불러오는 중...</p>
+    </div>
+
+    <!-- ── 오류 메시지 박스 ───────────────────────── -->
+    <div class="error-box" id="error-box" style="display:none;">
+      <span class="error-icon">⚠️</span>
+      <p id="error-message">오류가 발생했습니다.</p>
+    </div>
+
+    <!-- ── 공기 신호등 히어로 섹션 ───────────────── -->
+    <!-- 지역 대표 등급을 크게 표시하는 메인 영역 -->
+    <section class="hero-section" id="hero-section" style="display:none;">
+      <!-- 등급 이모지 (🔵🟢🟠🔴) -->
+      <div class="hero-emoji" id="hero-emoji">⚪</div>
+
+      <!-- 등급 한글 텍스트 (좋음/보통/나쁨/매우나쁨) -->
+      <div class="hero-status" id="hero-status">-</div>
+
+      <!-- 지역 평균 PM10 수치 -->
+      <div class="hero-avg-wrap">
+        <span class="hero-avg-label">평균 미세먼지 (PM10)</span>
+        <span class="hero-avg-value" id="hero-pm10">-</span>
+        <span class="hero-avg-unit">㎍/㎥</span>
+      </div>
+
+      <!-- 나쁨 이상일 때 표시하는 안내 문구 -->
+      <p class="hero-guide" id="hero-guide"></p>
+    </section>
+
+    <!-- ── 측정소 카드 그리드 ─────────────────────── -->
+    <section class="cards-grid" id="cards-grid"></section>
+
+  </main>
+
+  <!-- ── 하단 범례 ──────────────────────────────── -->
+  <footer class="legend-footer">
+    <p class="legend-title">PM10 등급 기준</p>
+    <ul class="legend-list">
+      <li class="legend-item legend-good">🔵 좋음 (0–30)</li>
+      <li class="legend-item legend-normal">🟢 보통 (31–80)</li>
+      <li class="legend-item legend-bad">🟠 나쁨 (81–150)</li>
+      <li class="legend-item legend-very-bad">🔴 매우나쁨 (151+)</li>
+    </ul>
+    <p class="legend-unit">단위: ㎍/㎥</p>
+
+    <!-- 공공데이터 출처 표기 -->
+    <p class="data-source">
+      데이터 출처:
+      <a
+        href="https://www.data.go.kr/data/15073861/openapi.do"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="data-source-link"
+      >공공데이터포털</a>
+      ·
+      <a
+        href="https://www.airkorea.or.kr"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="data-source-link"
+      >한국환경공단 에어코리아</a>
+    </p>
+  </footer>
+
+  <!-- 외부 자바스크립트 파일 연결 -->
+  <script src="script.js"></script>
+</body>
+</html>
